@@ -1,47 +1,35 @@
-import React from 'react';
+import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
+
 import './App.css';
-import Home from './Home'
-import About from './About'
-import Contacts from './Contacts'
-import Navbar from './Navbar'
-import Footer from './Footer'
-import SingleProduct from './SingleProduct'
 
-import {BrowserRouter as Router, Route, Redirect} from 'react-router-dom'
+import Home from './views/Home.js'
+import About from './views/About.js'
+import Contacts from './views/Contacts.js'
+import Data from './views/Data.js'
+import SingleProduct from './views/SingleProduct.js'
 
-class App extends React.Component{
+import Navbar from './components/Navbar'
 
-  state = {
-    isLoggedIn:true
+function App() {
+  let someFunc=(e,data)=>{
+    alert(data)
   }
-
-  // renderPages=(page)=>{
-  //   this.setState({page}, ()=>{console.log(this.state)})
-  // }
-
-  render(){
-    return(
-      <div className='App'>
-      <Router>
-      <Navbar />
-      <Route exact path='/' component={Home} />
-      <Route exact path='/about' render = { (props)=> <About year={2020} {...props} />} />
-      <Route exact path='/contact' render ={ props=>(!this.state.isLoggedIn ? 
-        <Redirect to='/'/> : <Contacts { ...props }/> )} />
-      <Route exact path='/singleproduct/:product' component={SingleProduct} />
-      </Router>
-
-{/*      <Navbar selectPage={this.renderPages}/>
-
-      {this.state.page === 'Home' ? 
-      <Home /> : this.state.page === 'About' ? 
-      <About /> : this.state.page === 'Contacts' ? 
-    <Contacts /> : <Home />}*/}
-
-    <Footer />
+  return (
+    <div className="App">
+    <header>I am header</header>
+    <Router>
+    <Navbar/>
+      <Routes>
+        <Route path='/' element={ <Home/> } />
+        <Route path='/about' element={ <About username={'Jack'} hello={someFunc}/> } />
+        <Route path='/contacts' element={ <Contacts/> } />
+        <Route path='/singleproduct/:product' element={ <SingleProduct/> } />
+        <Route path='/data/:somedata' element={ <Data/> } />
+      </Routes>
+    </Router>
+    <footer>I am footer</footer>
     </div>
-    )
-  }
+    );
 }
 
 export default App;
